@@ -98,6 +98,10 @@ class BurgerBuilder extends Component {
     });
   };
 
+  purshaseContinueHandler = () => {
+    alert('You Continue !');
+  };
+
   render() {
     const disabledInfo = {
       ...this.state.ingredients
@@ -111,7 +115,12 @@ class BurgerBuilder extends Component {
         <Modal
           show={this.state.purshasing}
           modalClosed={this.purshaseCancelHandler}>
-          <OrderSummary ingredients={this.state.ingredients} />
+          <OrderSummary
+            price={this.state.totalPrice}
+            purshaseContinued={this.purshaseContinueHandler}
+            purshaseCancelled={this.purshaseCancelHandler}
+            ingredients={this.state.ingredients}
+          />
         </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
