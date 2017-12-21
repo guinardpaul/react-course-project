@@ -3,6 +3,7 @@ import Aux from '../../hoc/Auxil';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
 const INGREDIENTS_PRICES = {
   salad: 0.5,
@@ -20,7 +21,8 @@ class BurgerBuilder extends Component {
       meat: 0
     },
     totalPrice: 4,
-    purshasable: false
+    purshasable: false,
+    purshasing: false
   };
 
   updatePurshaseState() {
@@ -84,6 +86,18 @@ class BurgerBuilder extends Component {
     );
   };
 
+  purshaseHandler = () => {
+    this.setState({
+      purshasing: true
+    });
+  };
+
+  purshaseCancelHandler = () => {
+    this.setState({
+      purshasing: false
+    });
+  };
+
   render() {
     const disabledInfo = {
       ...this.state.ingredients
@@ -94,7 +108,11 @@ class BurgerBuilder extends Component {
 
     return (
       <Aux>
-        <Modal />
+        <Modal
+          show={this.state.purshasing}
+          modalClosed={this.purshaseCancelHandler}>
+          <OrderSummary ingredients={this.state.ingredients} />
+        </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           ingredientsRemoved={this.removeIngredientHandler}
@@ -102,6 +120,7 @@ class BurgerBuilder extends Component {
           disabled={disabledInfo}
           price={this.state.totalPrice}
           purshasable={this.state.purshasable}
+          ordered={this.purshaseHandler}
         />
       </Aux>
     );
